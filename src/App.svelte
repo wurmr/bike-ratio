@@ -58,4 +58,5 @@
       <button on:click={addGearSet}>+</button>
     </span>
   </div>
+  <button on:click={gearSetsStore.reset}>Reset</button>
 </main>
