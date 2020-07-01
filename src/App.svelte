@@ -2,14 +2,10 @@
   export let name;
   import GearRatios from "./GearRatios.svelte";
   import GearSet from "./GearSet.svelte";
-  import { gearSets } from "./store.ts";
-
-  let ratios = [];
-
-  const colors = ["blue", "red", "orange", "green"];
+  import { gearSetsStore } from "./store";
 
   function addGearSet() {
-    gearSets.update(gs => [...gs, { color: colors[gs.length], ratios: [] }]);
+    gearSetsStore.addGearSet();
   }
 </script>
 
@@ -53,11 +49,11 @@
 
   <div class="container">
     <span class="col">
-      <GearRatios {ratios} tireSize={29} />
+      <GearRatios />
     </span>
     <span class="col">
-      {#each $gearSets as gearSet}
-        <GearSet bind:set={gearSet} />
+      {#each $gearSetsStore as gearSet, id}
+        <GearSet {id} />
       {/each}
       <button on:click={addGearSet}>+</button>
     </span>

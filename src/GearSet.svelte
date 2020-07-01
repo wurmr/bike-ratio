@@ -1,15 +1,7 @@
 <script>
   import Crankset from "./Crankset.svelte";
   import Cassette from "./Cassette.svelte";
-  export let set;
-
-  let crankset = [30];
-  let cassette = [11, 15];
-
-  $: set = {
-    ratios: crankset.map(cs => cassette.map(cog => cs / cog)).flat(),
-    color: set.color
-  };
+  export let id;
 </script>
 
 <style>
@@ -21,12 +13,6 @@
     border: 1px solid black;
     justify-content: space-around;
   }
-  .col {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 100%;
-    flex: 1;
-  }
   .times {
     display: flex;
     flex-direction: column;
@@ -35,10 +21,20 @@
     flex: 0.25;
     font-size: 3rem;
   }
+  .col {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+  }
 </style>
 
 <div class="container">
-  <Crankset class="col" bind:cogs={crankset} />
+  <span class="col">
+    <Crankset gearSetId={id} />
+  </span>
   <span class="times">X</span>
-  <Cassette class="col" bind:cogs={cassette} />
+  <span class="col">
+    <Cassette gearSetId={id} />
+  </span>
 </div>

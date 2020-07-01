@@ -1,15 +1,17 @@
 <script>
   import Cog from "./Cog.svelte";
-  export let cogs = [];
+  import { gearSetsStore } from "./store";
+  export let gearSetId;
+
   function addCog() {
-    cogs = [...cogs, cogs[cogs.length - 1] + 2];
+    gearSetsStore.addCassetteCog(gearSetId);
   }
 </script>
 
 <div>
   <p>Cassette</p>
   <p>
-    {#each cogs as cog}
+    {#each $gearSetsStore[gearSetId].cassette as cog}
       <Cog bind:teeth={cog} />
     {/each}
   </p>

@@ -3,8 +3,6 @@
   export let color;
   export let tireSize;
 
-  $: console.log("ratio", ratio, color, tireSize);
-
   $: width = (ratio / 4) * 100;
   $: gearInches = Math.round(ratio * tireSize * 100, 2) / 100;
 </script>
