@@ -1,5 +1,4 @@
 <script>
-  export let name;
   import GearRatios from "./GearRatios.svelte";
   import GearSet from "./GearSet.svelte";
   import { gearSetsStore } from "./store";
@@ -15,6 +14,7 @@
     padding: 1em;
     max-width: 240px;
     margin: 0 auto;
+    font: 1em "Fira Sans", sans-serif;
   }
 
   h1 {
@@ -45,14 +45,14 @@
 </style>
 
 <main>
-  <h1>Hello {name}!</h1>
+  <h1>Gear Set Compare</h1>
 
   <div class="container">
     <span class="col">
       <GearRatios />
     </span>
     <span class="col">
-      {#each $gearSetsStore as gearSet, id}
+      {#each $gearSetsStore as gearSet, id (id)}
         <GearSet {id} />
       {/each}
       <button on:click={addGearSet}>+</button>

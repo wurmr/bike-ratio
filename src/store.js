@@ -1,14 +1,13 @@
 import { writable } from './localStorageStore'
 import { derived } from 'svelte/store'
 
-const colors = ['blue', 'red', 'orange', 'green']
+const colors = ['#87d9ff', '#ff5c5c', '#e68600', '#42ff94']
 const gearSets = writable('gearSets', [])
-
 export const tireSize = writable('tireSize', 29)
+
 export const gearSetsStore = {
   subscribe: gearSets.subscribe,
   set: gearSets.set,
-  gearSets: gearSets.update,
   reset: () => gearSets.set([]),
   addGearSet: () =>
     gearSets.update((gs) => [
@@ -41,8 +40,10 @@ export const gearSetsStore = {
     }),
 }
 
-export const ratios = derived(gearSets, ($gearSets) =>
-  $gearSets
+const calculateRatios = (gearSets) => {
+  if (gearSets.length === 0) return []
+
+  return gearSets
     .flatMap((set) =>
       set.crankset.flatMap((chainring) =>
         set.cassette.map((cog) => ({
@@ -52,4 +53,10 @@ export const ratios = derived(gearSets, ($gearSets) =>
       )
     )
     .sort((a, b) => a.value - b.value)
+}
+
+export const ratios = derived(
+  gearSetsStore,
+  ($gearSetsStore) => calculateRatios($gearSetsStore),
+  []
 )
