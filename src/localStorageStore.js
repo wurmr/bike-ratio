@@ -1,20 +1,25 @@
 // Svelte store backed by window.localStorage
 // Persists store's data locally
-import {writable as internal, get} from 'svelte/store'
+import { writable as internal, get } from 'svelte/store'
 
 // wraps a regular writable store
 export function writable(key, initialValue) {
   // create an underlying store
   const store = internal(initialValue)
-  const {subscribe, set} = store
+  const { subscribe, set } = store
   // get the last value from localStorage
   const json = localStorage.getItem(key)
-  
+
   // use the value from localStorage if it exists
   if (json) {
-    set(JSON.parse(json))
+    try {
+      set(JSON.parse(json))
+    } catch {
+      // bad json in storage, clear it out
+      localStorage.clear()
+    }
   }
-  
+
   // return an object with the same interface as svelte's writable()
   return {
     // capture set and write to localStorage
@@ -28,9 +33,9 @@ export function writable(key, initialValue) {
       this.set(value)
     },
     // punt subscriptions to underlying store
-    subscribe
+    subscribe,
   }
-} 
+}
 
 /*
 LICENSE:
