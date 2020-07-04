@@ -1,10 +1,18 @@
 <script>
-  export let ratio;
-  export let color;
-  export let tireSize;
+  export let ratio
+  export let color
+  export let tireSize
+  import { fade } from 'svelte/transition'
 
-  $: width = (ratio / 4) * 100;
-  $: gearInches = Math.round(ratio * tireSize * 100, 2) / 100;
+  $: width = (ratio / 4) * 100
+  $: gearInches = Math.round(ratio * tireSize * 100, 2) / 100
+
+  function grow(node, { duration }) {
+    return {
+      duration,
+      css: t => `width: ${width * t}%;`
+    }
+  }
 </script>
 
 <style>
@@ -28,6 +36,6 @@
   }
 </style>
 
-<span class="ratio" style="width: {width}%; background: {color}">
+<span in:grow class="ratio" style="width: {width}%; background: {color}">
   <span class="text">{gearInches}</span>
 </span>
