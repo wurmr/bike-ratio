@@ -2,6 +2,7 @@
   import GearRatio from './GearRatio.svelte'
   import { ratios, tireSize } from './store'
   import { flip } from 'svelte/animate'
+  import { cubicInOut } from 'svelte/easing'
 </script>
 
 <style>
@@ -21,7 +22,7 @@
 
 <div class="container">
   {#each $ratios as { value, color, id } (id)}
-    <span class="item" animate:flip>
+    <span class="item" animate:flip={{ easying: cubicInOut }}>
       <GearRatio ratio={value} {color} tireSize={$tireSize} />
     </span>
   {/each}

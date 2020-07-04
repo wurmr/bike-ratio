@@ -3,13 +3,15 @@
   export let color
   export let tireSize
   import { fade } from 'svelte/transition'
+  import { cubicOut } from 'svelte/easing'
 
   $: width = (ratio / 4) * 100
   $: gearInches = Math.round(ratio * tireSize * 100, 2) / 100
 
-  function grow(node, { duration }) {
+  function grow(node, { duration = 750, easing = cubicOut }) {
     return {
       duration,
+      easing,
       css: t => `width: ${width * t}%;`
     }
   }
