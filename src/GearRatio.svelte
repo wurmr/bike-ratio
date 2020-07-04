@@ -33,7 +33,6 @@
     flex-basis: 100%;
     align-items: center;
     justify-content: flex-end;
-    color: aliceblue;
     padding-right: 0.5rem;
   }
 </style>

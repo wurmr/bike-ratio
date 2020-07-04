@@ -2,7 +2,7 @@ import { writable } from './localStorageStore'
 import { derived } from 'svelte/store'
 import { v4 as uuidv4 } from 'uuid'
 
-const colors = ['#87d9ff', '#ff5c5c', '#e68600', '#42ff94']
+const colors = ['#6DB9AE', '#F2EBB9', '#CE5F55', '#DC2951']
 const gearSets = writable('gearSets', [])
 export const tireSize = writable('tireSize', 29)
 
