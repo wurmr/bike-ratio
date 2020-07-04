@@ -1,5 +1,6 @@
 import { writable } from './localStorageStore'
 import { derived } from 'svelte/store'
+import { v4 as uuidv4 } from 'uuid'
 
 const colors = ['#87d9ff', '#ff5c5c', '#e68600', '#42ff94']
 const gearSets = writable('gearSets', [])
@@ -24,7 +25,7 @@ export const gearSetsStore = {
       const newGs = [...gs]
       newGs[gearSetId] = {
         ...newGs[gearSetId],
-        crankset: [...cogs, 30],
+        crankset: [...cogs, { id: uuidv4(), teeth: 30 }],
       }
       return newGs
     }),
@@ -34,21 +35,23 @@ export const gearSetsStore = {
       const newGs = [...gs]
       newGs[gearSetId] = {
         ...newGs[gearSetId],
-        cassette: [...cogs, cogs[cogs.length - 1] + 2],
+        cassette: [
+          ...cogs,
+          { id: uuidv4(), teeth: cogs[cogs.length - 1]?.teeth + 2 },
+        ],
       }
       return newGs
     }),
 }
 
 const calculateRatios = (gearSets) => {
-  if (gearSets.length === 0) return []
-
   return gearSets
     .flatMap((set) =>
-      set.crankset.flatMap((chainring) =>
-        set.cassette.map((cog) => ({
-          value: chainring / cog,
+      set.crankset.flatMap(({ teeth: crankTeeth, id: crankID }) =>
+        set.cassette.map(({ teeth: cogTeeth, id: cogId }) => ({
+          value: crankTeeth / cogTeeth,
           color: set.color,
+          id: `${crankID}.${cogId}`,
         }))
       )
     )

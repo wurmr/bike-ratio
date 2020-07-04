@@ -1,18 +1,18 @@
 <script>
-  import Cog from "./Cog.svelte";
-  import { gearSetsStore } from "./store";
-  export let gearSetId;
+  import Cog from './Cog.svelte'
+  import { gearSetsStore } from './store'
+  export let gearSetId
 
   function addCog() {
-    gearSetsStore.addCranksetCog(gearSetId);
+    gearSetsStore.addCranksetCog(gearSetId)
   }
 </script>
 
 <div>
   <p>Crankset</p>
   <p>
-    {#each $gearSetsStore[gearSetId].crankset as cog}
-      <Cog bind:teeth={cog} />
+    {#each $gearSetsStore[gearSetId].crankset as { teeth }}
+      <Cog bind:teeth />
     {/each}
   </p>
 

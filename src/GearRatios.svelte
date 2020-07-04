@@ -1,7 +1,8 @@
 <script>
-  import GearRatio from "./GearRatio.svelte";
-  import { ratios, tireSize } from "./store";
-  import { slide } from "svelte/transition";
+  import GearRatio from './GearRatio.svelte'
+  import { ratios, tireSize } from './store'
+  import { fade } from 'svelte/transition'
+  import { flip } from 'svelte/animate'
 </script>
 
 <style>
@@ -20,10 +21,8 @@
 </style>
 
 <div class="container">
-  <h2>Gear Inches</h2>
-
-  {#each $ratios as { value, color }}
-    <span class="item" in:slide>
+  {#each $ratios as { value, color, id } (id)}
+    <span class="item" transition:fade animate:flip>
       <GearRatio ratio={value} {color} tireSize={$tireSize} />
     </span>
   {/each}
