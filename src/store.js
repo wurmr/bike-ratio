@@ -17,6 +17,7 @@ export const gearSetsStore = {
         color: colors[gs.length],
         crankset: [],
         cassette: [],
+        tireSize: 29,
       },
     ]),
   addCranksetCog: (gearSetId) =>
@@ -47,15 +48,23 @@ export const gearSetsStore = {
 const calculateRatios = (gearSets) => {
   return gearSets
     .flatMap((set) =>
-      set.crankset.flatMap(({ teeth: crankTeeth, id: crankID }) =>
-        set.cassette.map(({ teeth: cogTeeth, id: cogId }) => ({
-          value: crankTeeth / cogTeeth,
-          color: set.color,
-          id: `${crankID}.${cogId}`,
-        }))
-      )
+      [...set.crankset]
+        .sort((a, b) => a.teeth - b.teeth)
+        .flatMap(({ teeth: crankTeeth, id: crankID }, crankIndex) =>
+          [...set.cassette]
+            .sort((a, b) => b.teeth - a.teeth)
+            .map(({ teeth: cogTeeth, id: cogId }, cassetteIndex) => ({
+              color: set.color,
+              tireSize: set.tireSize,
+              gearInches:
+                Math.round((crankTeeth / cogTeeth) * set.tireSize * 100, 2) /
+                100,
+              id: `${crankID}.${cogId}`,
+              display: `${crankIndex + 1} - ${cassetteIndex + 1}`,
+            }))
+        )
     )
-    .sort((a, b) => a.value - b.value)
+    .sort((a, b) => a.gearInches - b.gearInches)
 }
 
 export const ratios = derived(

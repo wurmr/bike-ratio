@@ -36,9 +36,9 @@
     flex-basis: 100%;
     flex: 1;
   }
-  /* .colorInput {
+  .colorInput {
     margin: 0.4em;
-  } */
+  }
 </style>
 
 <div
@@ -53,6 +53,14 @@
       name="head" />
     <label for="color">Color</label>
   </span> -->
+  <span>
+    <input
+      class="number"
+      type="tireSize"
+      bind:value={$gearSetsStore[id].tireSize}
+      name="tireSize" />
+    <label for="tireSize">TireSize</label>
+  </span>
   <div class="colContainer">
     <span class="col">
       <Crankset gearSetId={id} />

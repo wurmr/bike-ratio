@@ -17,6 +17,8 @@
     font: 1em 'Fira Sans', sans-serif;
     background-color: #364558;
     color: #333;
+    height: 95vh;
+    width: 95vw;
   }
 
   h1 {
@@ -32,19 +34,37 @@
     }
   }
 
+  @media (max-width: 639px) {
+    main {
+      height: 100vh;
+      width: 100vw;
+      max-width: none;
+    }
+  }
+
   .container {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-wrap: nowrap;
     width: 100%;
+    height: 100px;
   }
-  .col {
+  .container > * {
+    margin: 0.5rem 0;
+  }
+  .gearSets {
     display: flex;
     flex-direction: row;
-    flex-basis: 100%;
+    flex-basis: content;
     flex: 1;
     flex-wrap: wrap;
     justify-content: flex-start;
+  }
+  .ratios {
+    display: flex;
+    flex: 4;
+    flex-basis: content;
   }
   .gearSet {
     display: flex;
@@ -65,7 +85,7 @@
 
   <div class="container">
 
-    <span class="col">
+    <span class="gearSets">
       {#each $gearSetsStore as gearSet, id (id)}
         <span class="gearSet">
           <GearSet {id} />
@@ -75,7 +95,7 @@
         <button class="gearSet" on:click={addGearSet}>+</button>
       {/if}
     </span>
-    <span class="col">
+    <span class="ratios">
       <GearRatios />
     </span>
     <span class="buttons">
